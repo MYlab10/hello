@@ -1,0 +1,17 @@
+const { Builder, By, Key, until } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+(async () => {
+ const driver = await new Builder()
+ .forBrowser('chrome')
+ .setChromeOptions(new chrome.Options())
+ .build();
+ try {
+ await driver.get('https://www.google.com');
+ await driver.findElement(By.name('q')).sendKeys('Selenium', Key.RETURN);
+ await driver.wait(until.titleContains('Selenium'), 100000000000);
+ } catch (error) {
+ console.error('Test failed:', error);
+ } finally {
+ await driver.quit();
+ }
+})();
